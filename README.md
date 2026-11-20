@@ -373,6 +373,7 @@ greedy-interval-scheduling
 │   └── benchmark.csv
 │
 ├── report/
+|   |── graph.py
 │   ├── runtime_comparison.png
 │   └── runtime_logarithmic.png
 │
@@ -382,7 +383,7 @@ greedy-interval-scheduling
 │   ├── Scheduler.cpp
 │   └── main.cpp
 │
-├── graph.py
+├
 ├── README.md
 └── benchmark.exe
 ```
