@@ -17,7 +17,12 @@ int main()
         {5, 9}
     };
 
-  
+    vector<Quest> result =
+        SelectMaximumQuests(uests);
+
+    cout << "Selected quests:\n";
+
+   
 
     return 0;
 }
