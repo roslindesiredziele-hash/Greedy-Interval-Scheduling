@@ -11,6 +11,10 @@
 
 using namespace std;
 
+double MeasureScheduler(int n, int repetitions);
+
+void RunExample();
+
 int main()
 {
     srand(time(nullptr));
@@ -52,3 +56,34 @@ int main()
 
     return 0;
 }
+
+
+double MeasureScheduler(int n, int repetitions)
+{
+    vector<Quest> quests =
+        GenerateRandomQuests(n);
+
+    LARGE_INTEGER start, end, frequency;
+
+    QueryPerformanceFrequency(&frequency);
+
+    double totalTime = 0.0;
+
+    for (int i = 0; i < repetitions; i++)
+    {
+        QueryPerformanceCounter(&start);
+
+        SelectMaximumQuests(quests);
+
+        QueryPerformanceCounter(&end);
+
+        totalTime +=
+            (end.QuadPart - start.QuadPart)
+            * 1000.0
+            / frequency.QuadPart;
+    }
+
+    return totalTime / repetitions;
+}
+
+
