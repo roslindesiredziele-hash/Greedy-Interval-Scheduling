@@ -1,5 +1,6 @@
 #include "Scheduler.h"
 
+#include <Windows.h>
 #include <iostream>
 #include <vector>
 #include <ctime>
