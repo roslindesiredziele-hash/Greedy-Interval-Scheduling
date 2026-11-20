@@ -23,7 +23,13 @@ int main()
 
     ofstream outfile("./data/benchmark.csv");
 
-    
+    if (!outfile)
+    {
+        cerr<< "Unable to open benchmark.csv\n";
+        return 1;
+    }
+
+
 
     return 0;
 }
