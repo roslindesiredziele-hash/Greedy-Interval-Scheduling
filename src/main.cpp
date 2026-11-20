@@ -94,10 +94,7 @@ double MeasureScheduler(int n, int repetitions)
 
         QueryPerformanceCounter(&end);
 
-        totalTime +=
-            (end.QuadPart - start.QuadPart)
-            * 1000.0
-            / frequency.QuadPart;
+        totalTime += (end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
     }
 
     return totalTime / repetitions;
