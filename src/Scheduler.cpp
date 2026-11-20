@@ -8,9 +8,12 @@ vector<Quest> SelectMaximumQuests(vector<Quest>& quests)
 {
     sort(quests.begin(), quests.end(), [](const Quest& a, const Quest& b)
         {
-            return a.end < b.end
-            ? a.start < b.start
-            : a.end < b.end;
+            if (a.end != b.end)
+            {
+                return a.end < b.end;
+            }
+            
+            return a.start < b.start;
         }
     );
 
