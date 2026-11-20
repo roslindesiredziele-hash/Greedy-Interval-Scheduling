@@ -40,6 +40,36 @@ int main()
         1000000
     };
 
+    for (int size : sizes)
+    {
+        int repetitions;
+
+        if (size <= 1000)
+        {
+            repetitions = 100;
+        }
+        else if (size <= 100000)
+        {
+            repetitions = 20;
+        }
+        else
+        {
+            repetitions = 5;
+        }
+
+        double time =
+            MeasureScheduler(size, repetitions);
+
+        cout << "Size: " << size << " | Time: " << time << " ms" << endl;
+
+        outfile << size << "," << time << "\n";
+    }
+
+    outfile.close();
+
+    cout << "\nBenchmark completed.\n";
+
+    cout << "Results saved to " << "./data/benchmark.csv\n";
 
     return 0;
 }
