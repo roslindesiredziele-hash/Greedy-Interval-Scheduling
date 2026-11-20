@@ -6,4 +6,6 @@
 
 std::vector<Quest> SelectMaximumQuests(std::vector<Quest>& quests);
 
+std::vector<Quest> GenerateRandomQuests(int n);
+
 #endif
