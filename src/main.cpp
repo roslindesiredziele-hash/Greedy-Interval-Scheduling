@@ -19,6 +19,12 @@ int main()
 {
     srand(time(nullptr));
 
+    RunExample();
+
+    ofstream outfile("./data/benchmark.csv");
+
+    
+
     return 0;
 }
 
