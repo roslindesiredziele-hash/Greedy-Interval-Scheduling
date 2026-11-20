@@ -1,6 +1,8 @@
-# Pro Publico Bono
+# greedy-interval-scheduling
 
-A C++ implementation of the classic Activity Selection Problem using a greedy algorithm. The project helps Geralt the Witcher choose the maximum number of non-overlapping community service quests that can be completed within a day.
+A C++ implementation and empirical analysis of the classic **Activity Selection Problem** using a greedy algorithm. The project helps Geralt the Witcher choose the maximum number of non-overlapping community service quests that can be completed within a day.
+
+---
 
 ## Overview
 
@@ -16,7 +18,7 @@ Some quests overlap and therefore cannot be completed together.
 
 The objective is to select the maximum possible number of non-overlapping quests.
 
-This problem is solved using a greedy interval scheduling algorithm.
+This problem is solved using the classic **Greedy Interval Scheduling Algorithm**, which produces an optimal solution while maintaining high efficiency even for very large datasets.
 
 ---
 
@@ -31,9 +33,11 @@ Q2 = [s2, t2)
 Qn = [sn, tn)
 ```
 
-select the largest subset of mutually non-overlapping quests.
+select the largest subset of mutually compatible (non-overlapping) quests.
 
-Example:
+### Example
+
+Input:
 
 ```text
 [1,4)
@@ -82,7 +86,7 @@ The algorithm follows a well-known greedy strategy:
 
 1. Sort all quests by increasing finishing time.
 2. Select the quest that finishes earliest.
-3. Repeatedly select the next quest whose start time is not earlier than the end time of the previously selected quest.
+3. Repeatedly select the next quest whose start time is not earlier than the end time of the last selected quest.
 
 Implementation:
 
@@ -90,7 +94,15 @@ Implementation:
 sort(
     quests.begin(),
     quests.end(),
-    ...
+    [](const Quest& a, const Quest& b)
+    {
+        if (a.end != b.end)
+        {
+            return a.end < b.end;
+        }
+
+        return a.start < b.start;
+    }
 );
 
 for (const Quest& q : quests)
@@ -105,39 +117,45 @@ for (const Quest& q : quests)
 
 ---
 
-## Correctness
+## Why the Algorithm Works
 
-The greedy choice is optimal because selecting the quest that finishes earliest leaves the largest possible amount of time available for future quests.
+The greedy choice is to always select the quest that finishes earliest among all available quests.
 
-Therefore, no other choice can lead to a larger set of compatible quests.
+This strategy is optimal because the earliest finishing quest leaves the largest possible amount of remaining time for scheduling future quests.
+
+Any schedule that does not select the earliest finishing compatible quest can be transformed into one that does without reducing the number of quests completed.
+
+Therefore, the greedy solution always produces a maximum-size set of non-overlapping quests.
 
 ---
 
 ## Complexity Analysis
 
-Sorting:
+### Sorting
 
 ```text
 O(n log n)
 ```
 
-Selection:
+### Quest Selection
 
 ```text
 O(n)
 ```
 
-Overall:
+### Overall Complexity
 
 ```text
 O(n log n)
 ```
 
-Space Complexity:
+### Space Complexity
 
 ```text
 O(n)
 ```
+
+The sorting phase dominates the execution time, while the actual greedy selection requires only a single linear scan through the quest list.
 
 ---
 
@@ -157,7 +175,7 @@ Random quest datasets were generated using:
 GenerateRandomQuests(int n)
 ```
 
-Quest sizes:
+Dataset sizes:
 
 ```text
 10
@@ -183,32 +201,32 @@ Quest sizes:
 1000000
 ```
 
-Average execution time was recorded for each dataset size.
+For each dataset, the algorithm was executed repeatedly and the average runtime was recorded.
 
 ---
 
 ## Experimental Results
 
-Example benchmark results:
+### Benchmark Data
 
-| Number of Quests | Time (ms) |
-|------------------|------------|
+| Number of Quests | Runtime (ms) |
+|------------------:|-------------:|
 | 10 | 0.0015 |
 | 100 | 0.0079 |
-| 1000 | 0.1287 |
-| 10000 | 1.6469 |
-| 100000 | 20.4165 |
-| 1000000 | 276.483 |
+| 1,000 | 0.1287 |
+| 10,000 | 1.6469 |
+| 100,000 | 20.4165 |
+| 1,000,000 | 276.483 |
 
-The measured execution times grow consistently with the expected:
+The measured execution times increase steadily with the number of quests and remain consistent with the expected:
 
 ```text
 O(n log n)
 ```
 
-complexity.
+behavior.
 
-The sorting phase dominates the runtime, while the greedy selection phase requires only a linear scan.
+Because the algorithm spends most of its time sorting the intervals, the growth rate closely follows the complexity of the sorting phase.
 
 ---
 
@@ -216,19 +234,42 @@ The sorting phase dominates the runtime, while the greedy selection phase requir
 
 ### Runtime Comparison
 
-```text
-report/runtime_comparison.png
-```
+![Runtime Comparison](report/runtime_comparison.png)
 
-Displays execution time as a function of the number of quests.
+This graph shows execution time as a function of the number of quests.
+
+Observations:
+
+- Runtime increases smoothly as the input size grows.
+- The growth rate is significantly slower than quadratic behavior.
+- The algorithm remains efficient even for very large datasets.
+- The dominant cost comes from sorting the intervals before scheduling.
+
+---
 
 ### Logarithmic Runtime Comparison
 
+![Logarithmic Runtime Comparison](report/runtime_logarithmic.png)
+
+Using logarithmic scales makes it easier to visualize performance across multiple orders of magnitude.
+
+Observations:
+
+- The plotted points form an approximately straight ascending line.
+- Runtime growth remains predictable from 10 quests up to 1,000,000 quests.
+- The measurements closely match the expected complexity of:
+
 ```text
-report/runtime_logarithmic.png
+O(n log n)
 ```
 
-Uses logarithmic axes to better visualize growth trends over large input sizes.
+- Processing one million randomly generated quests required approximately:
+
+```text
+276 ms
+```
+
+demonstrating excellent scalability.
 
 ---
 
@@ -262,8 +303,8 @@ The program:
 
 1. Demonstrates the algorithm on a sample dataset.
 2. Generates random quest datasets.
-3. Measures execution time.
-4. Saves benchmark data.
+3. Benchmarks runtime performance.
+4. Saves measurements to a CSV file.
 
 Example output:
 
@@ -273,12 +314,7 @@ Selected quests:
 [3, 5)
 [5, 7)
 [8, 9)
-[11, 13)
-
-Total quests: 5
-
-Size: 1000 | Time: 0.128 ms
-Size: 10000 | Time: 1.647 ms
+0000 | Time: 1.647 ms
 ...
 ```
 
@@ -286,13 +322,13 @@ Size: 10000 | Time: 1.647 ms
 
 ## Benchmark Output
 
-Results are stored in:
+Results are automatically written to:
 
 ```text
 data/benchmark.csv
 ```
 
-Format:
+Example format:
 
 ```csv
 Size,TimeMs
@@ -331,7 +367,7 @@ report/
 ## Project Structure
 
 ```text
-task2_Pro_publico_bono
+greedy-interval-scheduling
 │
 ├── data/
 │   └── benchmark.csv
@@ -357,13 +393,13 @@ task2_Pro_publico_bono
 
 A greedy interval scheduling algorithm was implemented to maximize the number of non-overlapping quests selected from a set of time intervals.
 
-Experimental benchmarking confirmed the theoretical time complexity of:
+Experimental benchmarking confirmed the expected theoretical complexity:
 
 ```text
 O(n log n)
 ```
 
-The algorithm remained efficient even for datasets containing one million quests, demonstrating the practicality of greedy methods for large scheduling problems.
+The results demonstrate that the algorithm scales efficiently even for very large datasets. Processing one million randomly generated quests required less than 300 milliseconds on the test machine, confirming that greedy scheduling is both theoretically optimal and practically efficient for large interval scheduling problems.
 
 ---
 
