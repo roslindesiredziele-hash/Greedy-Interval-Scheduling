@@ -4,7 +4,7 @@
 
 using namespace std;
 
-vector<Quest> SelectMaximumQuests(vector<Quest> quests)
+vector<Quest> SelectMaximumQuests(const vector<Quest>& quests)
 {
     sort(quests.begin(), quests.end(), [](const Quest& a, const Quest& b)
         {
