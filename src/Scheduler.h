@@ -4,6 +4,6 @@
 #include "Quest.h"
 #include <vector>
 
-std::vector<Quest> SelectMaximumQuests(std::vector<Quest> quests);
+std::vector<Quest> SelectMaximumQuests(std::vector<Quest>& quests);
 
 #endif
