@@ -1,9 +1,10 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
+#include <Windows.h>
+
 #include "Scheduler.h"
 
-#include <Windows.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -33,8 +34,24 @@ int main()
 
     vector<int> sizes =
     {
+        10,
+        20,
+        30,
+        40,
+        50,
         100,
+        150,
+        200,
+        250,
+        300,
+        400,
+        500,
         1000,
+        1500,
+        2000,
+        2500,
+        3000,
+        5000,
         10000,
         100000,
         1000000
@@ -57,8 +74,7 @@ int main()
             repetitions = 5;
         }
 
-        double time =
-            MeasureScheduler(size, repetitions);
+        double time = MeasureScheduler(size, repetitions);
 
         cout << "Size: " << size << " | Time: " << time << " ms" << endl;
 
