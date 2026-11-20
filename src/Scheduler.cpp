@@ -1,11 +1,10 @@
 #include "Scheduler.h"
 
 #include <algorithm>
-#include <ctime>
 
 using namespace std;
 
-vector<Quest> SelectMaximumQuests(vector<Quest>& quests)
+vector<Quest> SelectMaximumQuests(vector<Quest> quests)
 {
     sort(quests.begin(), quests.end(), [](const Quest& a, const Quest& b)
         {
@@ -37,8 +36,6 @@ vector<Quest> SelectMaximumQuests(vector<Quest>& quests)
 vector<Quest> GenerateRandomQuests(int n)
 {
     vector<Quest> quests;
-
-    srand(time(nullptr));
 
     for (int i = 0; i < n; i++)
     {

@@ -2,11 +2,13 @@
 
 #include <iostream>
 #include <vector>
+#include <ctime>
 
 using namespace std;
 
 int main()
 {
+    srand(time(nullptr));
     vector<Quest> quests =
     {
         {1, 4},
