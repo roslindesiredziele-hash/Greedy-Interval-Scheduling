@@ -18,11 +18,24 @@ int main()
     };
 
     vector<Quest> result =
-        SelectMaximumQuests(uests);
+        SelectMaximumQuests(quests);
 
     cout << "Selected quests:\n";
 
-   
+    for (const Quest& q : result)
+    {
+        cout
+            << "["
+            << q.start
+            << ", "
+            << q.end
+            << ")\n";
+    }
+
+    cout
+        << "\nTotal quests: "
+        << result.size()
+        << endl;
 
     return 0;
 }
