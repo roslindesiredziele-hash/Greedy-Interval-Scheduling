@@ -1,7 +1,11 @@
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+
 #include "Scheduler.h"
 
 #include <Windows.h>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <ctime>
 
