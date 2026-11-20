@@ -29,6 +29,7 @@ int main()
         return 1;
     }
 
+    outfile << "Size," << "TimeMs\n";
 
 
     return 0;
