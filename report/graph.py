@@ -40,8 +40,6 @@ plt.savefig(
     dpi=300
 )
 
-plt.close()
-
 # Logarithmic graph
 plt.figure(figsize=(10, 6))
 
@@ -82,8 +80,6 @@ plt.savefig(
     "./report/runtime_logarithmic.png",
     dpi=300
 )
-
-plt.close()
 
 print("Generated:")
 print("  report/runtime_comparison.png")
