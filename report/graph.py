@@ -88,3 +88,5 @@ plt.close()
 print("Generated:")
 print("  report/runtime_comparison.png")
 print("  report/runtime_logarithmic.png")
+
+plt.show()
